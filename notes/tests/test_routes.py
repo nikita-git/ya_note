@@ -15,10 +15,8 @@ class TestRoutes(TestCase):
     @classmethod
     def setUpTestData(cls):
         """Инициализация данных для проведения тестов."""
-        # Создали пользователя.
         cls.author = User.objects.create(username='admin')
         cls.another_author = User.objects.create(username='not_admin')
-        # Создали заметку.
         cls.note = Note.objects.create(
             title='Заголовок',
             text='Текст',
@@ -50,9 +48,16 @@ class TestRoutes(TestCase):
         )
         for user, status in users_statuses:
             self.client.force_login(user)
-            for name in ('notes:detail', 'notes:edit', 'notes:delete', 'notes:add'):
+            for name in ('notes:detail',
+                         'notes:edit',
+                         'notes:delete',
+                         'notes:add',
+                         'notes:list',
+                         'notes:success'):
                 with self.subTest(user=user, name=name):
-                    if name != 'notes:add':
+                    if (name != 'notes:add' and
+                            name != 'notes:list' and
+                            name != 'notes:success'):
                         url = reverse(name, args=(self.note.slug,))
                     else:
                         url = reverse(name)
