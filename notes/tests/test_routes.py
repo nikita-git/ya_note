@@ -4,6 +4,7 @@ from http import HTTPStatus
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
+
 from notes.models import Note
 
 User = get_user_model()
@@ -23,7 +24,6 @@ class TestRoutes(TestCase):
             author=cls.author,
         )
 
-    # @skip("-OK-")
     def test_pages_availability_anonymous(self):
         """Проверка доступности страниц анониму."""
         urls = (
@@ -39,7 +39,6 @@ class TestRoutes(TestCase):
                 response = self.client.get(url)
                 self.assertEqual(response.status_code, status)
 
-    # @skip("-OK-")
     def test_pages_availability_author(self):
         """Проверка доступности заметки автору, пользователю."""
         users_statuses = (
